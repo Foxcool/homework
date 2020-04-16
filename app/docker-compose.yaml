@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+    homework:
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        container_name: homework_main
+        ports:
+            - 8000:8000

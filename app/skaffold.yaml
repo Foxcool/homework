@@ -1,0 +1,17 @@
+apiVersion: skaffold/v2beta1
+kind: Config
+metadata:
+  name: app
+build:
+  artifacts:
+  - image: foxcool/homework
+deploy:
+  kubectl:
+    manifests:
+    - deployment.yaml
+    - service.yaml
+portForward:
+  - resourceType: deployment
+    resourceName: leeroy-web
+    port: 9000
+    localPort: 9000

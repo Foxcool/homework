@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "homework-chart.fullname" . }}
+  labels:
+    {{- include "homework-chart.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: api
+      protocol: TCP
+  selector:
+    {{- include "homework-chart.selectorLabels" . | nindent 4 }}

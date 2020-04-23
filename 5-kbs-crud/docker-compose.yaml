@@ -1,0 +1,39 @@
+version: '3.7'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: homework_mongodb
+    ports:
+      - 27017
+    networks:
+      - crud
+    volumes:
+      - 'mongo:/data/db'
+
+  homework:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: homework_server
+    environment:
+      - HOMEWORK_LOGGING_OUTPUT=STDOUT
+      - HOMEWORK_LOGGING_FORMAT=TEXT
+      - HOMEWORK_LOGGING_LEVEL=DEBUG
+      - HOMEWORK_HTTP_PORT=80
+      - HOMEWORK_DB_PORT=27017
+      - HOMEWORK_DB_HOST=homework_mongodb
+      - HOMEWORK_DB_DATABASE=homework
+      #- HOMEWORK_SENTRYDSN=
+    ports:
+      - 8000:80
+    networks:
+      - crud
+    tty: true
+    depends_on:
+      - mongodb
+
+networks:
+  crud:
+volumes:
+  mongo:

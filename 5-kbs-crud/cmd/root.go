@@ -34,7 +34,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&CFGFile, "config", "c", "", "Config file path")
 
 	rootCmd.PersistentFlags().String("http.host", "", "API host")
-	rootCmd.PersistentFlags().Int("http.port", 8585, "API port")
+	rootCmd.PersistentFlags().Int("http.port", 80, "API port")
 
 	rootCmd.PersistentFlags().String("db.host", "127.0.0.1", "Database host")
 	rootCmd.PersistentFlags().Int("db.port", 27017, "Database port")

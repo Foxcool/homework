@@ -26,10 +26,21 @@
 ### Generate API server code
 
 ```shell script
-oapi-codegen --package api --generate types,server,spec ./docs/swagger.yaml > ./api/swagger.gen.go
+oapi-codegen --package api --generate types,server,spec,skip-prune ./docs/swagger.yaml > ./api/swagger.gen.go
 ```
 
 
 ## Docker
     sudo docker-compose up -d
     
+## Helm
+
+Run
+```shell script
+helm install myWork .
+```
+
+Install deps
+```shell script
+helm dependency update
+```

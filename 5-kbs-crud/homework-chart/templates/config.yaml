@@ -8,7 +8,7 @@ data:
   LOGGING_LEVEL: {{.Values.logging.level | quote}}
   HTTP_PORT: {{.Values.service.port | quote}}
   DB_PORT: {{.Values.mongodb.service.port | quote}}
-  DB_HOST: "mywork-mongodb"
+  DB_HOST: {{ .Release.Name }}-mongodb
   DB_DATABASE: {{.Values.mongodb.mongodbDatabase | quote}}
 ---
 apiVersion: v1

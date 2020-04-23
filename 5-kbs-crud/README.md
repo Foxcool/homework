@@ -37,10 +37,15 @@ oapi-codegen --package api --generate types,server,spec,skip-prune ./docs/swagge
 
 Run
 ```shell script
-helm install myWork .
+cd homework-chart
+helm install mywork .
 ```
 
 Install deps
 ```shell script
 helm dependency update
 ```
+
+## Postman collection
+
+    tests/postman/collection.json

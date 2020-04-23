@@ -314,19 +314,19 @@
 	],
 	"variable": [
 		{
-			"id": "8fc88e2c-7df9-4197-a4c6-253d1d3ac9e2",
+			"id": "c2f3a2d1-4e72-4733-887c-8c003b0c414f",
 			"key": "baseUrl",
-			"value": "http://localhost:8000",
+			"value": "http://arch.homework/otusapp",
 			"type": "string"
 		},
 		{
-			"id": "ee299beb-8e69-44d6-9bff-8b019d19a661",
+			"id": "2efb9541-3c5f-4db4-866d-683cb9746762",
 			"key": "baseSchema",
 			"value": "{\"type\":\"object\",\"properties\":{\"version\":{\"type\":\"string\"},\"errors\":{\"type\":[\"object\",\"array\",\"null\"]},\"data\":{\"type\":[\"array\",\"null\"]}},\"required\":[\"version\",\"errors\",\"data\"]}",
 			"type": "string"
 		},
 		{
-			"id": "cb340122-28a7-445f-8ed1-c3cc2290944e",
+			"id": "594be38e-1f2e-46ab-ac7d-5394b83ed7df",
 			"key": "userSchema",
 			"value": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"ID\": {\n      \"type\": \"string\"\n    },\n    \"firstName\": {\n      \"type\": \"string\"\n    },\n    \"lastName\": {\n      \"type\": \"string\"\n    },\n    \"middleName\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    },\n    \"email\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    },\n    \"mobile\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    }\n  },\n  \"required\": [\n    \"ID\",\n    \"firstName\",\n    \"lastName\",\n    \"middleName\",\n    \"email\",\n    \"mobile\"\n  ]\n}",
 			"type": "string"

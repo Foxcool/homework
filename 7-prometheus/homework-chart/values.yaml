@@ -1,0 +1,31 @@
+# Default values for homework-chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 2
+
+image:
+  repository: foxcool/homework
+
+service:
+  type: NodePort
+  port: 8008
+
+mongodb:
+  mongodbUsername: myuser
+  mongodbPassword: passwd
+  mongodbDatabase: homework
+  service:
+    port: "27017"
+logging:
+  output: STDOUT
+  format: TEXT
+  level: DEBUG
+
+metrics:
+  serviceMonitor:
+    enabled: true
+
+ingress:
+  address: nginx-nginx-ingress-controller
+  hostname: arch.homework

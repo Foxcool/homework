@@ -1,0 +1,16 @@
+apiVersion: v2
+name: homework-chart
+description: A Helm chart for homework CRUD app
+
+
+type: application
+version: 0.1.0
+appVersion: "5.0"
+
+dependencies:
+  - name: mongodb
+    version: 7.11.x
+    repository: https://charts.bitnami.com/bitnami
+    condition: mongodb.enabled
+    tags:
+      - homework-database

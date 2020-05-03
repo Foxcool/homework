@@ -1,0 +1,336 @@
+{
+	"info": {
+		"_postman_id": "8332ccce-513f-48b3-9756-532897698a28",
+		"name": "homework",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST /users",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5fb35499-0f5a-44dc-b853-e08134c486ef",
+						"exec": [
+							"let ts = Math.round((new Date()).getTime() / 1000);",
+							"",
+							"pm.environment.set(\"firstName\", \"Василий\");",
+							"pm.environment.set(\"lastName\", \"Али-Баба́\");",
+							"pm.environment.set(\"middleName\", \"Алибабаевич́\");",
+							"pm.environment.set(\"emailValue\", \"alibaba\" + ts + \"@mail.ru\");",
+							"pm.environment.set(\"mobileValue\", \"7\" + ts);",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "380bdac0-13cd-4fa6-aa47-6bc25937fd41",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody)",
+							"",
+							"pm.test(\"Success response is correct\", function () {",
+							"    pm.expect(pm.response).to.have.property('code', 200);",
+							"    pm.expect(pm.response).to.have.property('status', 'OK');",
+							"    pm.expect(pm.response).to.have.header('Content-type', 'application/json; charset=UTF-8');",
+							"});",
+							"",
+							"pm.test('Base schema is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, glFn.getEnvSchema(\"baseSchema\"))).to.be.true;",
+							"});",
+							"",
+							"if (pm.response.code === 200) {",
+							"    ",
+							"    pm.test('Entity schema is valid', function() {",
+							"      pm.expect(tv4.validate(jsonData.data[0], glFn.getEnvSchema(\"userSchema\"))).to.be.true;",
+							"    });",
+							"    ",
+							"    pm.test('Message data is valid', function() {",
+							"      pm.expect(jsonData).to.have.property(\"message\", \"SUCCESS\");",
+							"    });",
+							"    ",
+							"    pm.test(\"Entity data is correct\", function () {",
+							"        pm.expect(jsonData.data[0]).to.have.property(\"firstName\", pm.environment.get(\"firstName\"));",
+							"        pm.expect(jsonData.data[0]).to.have.property(\"lastName\", pm.environment.get(\"lastName\"));",
+							"        pm.expect(jsonData.data[0]).to.have.property(\"middleName\", pm.environment.get(\"middleName\"));",
+							"        pm.expect(jsonData.data[0]).to.have.property(\"email\", pm.environment.get(\"emailValue\"));",
+							"        pm.expect(jsonData.data[0]).to.have.property(\"mobile\", pm.environment.get(\"mobileValue\"));",
+							"    });",
+							"    ",
+							"    pm.environment.set(\"userID\", jsonData.data[0].ID);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"{{firstName}}\",\n    \"lastName\": \"{{lastName}}\",\n    \"middleName\": \"{{middleName}}\",\n    \"email\": \"{{emailValue}}\",\n    \"mobile\": \"{{mobileValue}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "46e360db-b595-4747-a9b4-67de123d566b",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody)",
+							"",
+							"pm.test(\"Success response is correct\", function () {",
+							"    pm.expect(pm.response).to.have.property('code', 200);",
+							"    pm.expect(pm.response).to.have.property('status', 'OK');",
+							"    pm.expect(pm.response).to.have.header('Content-type', 'application/json; charset=UTF-8');",
+							"});",
+							"",
+							"pm.test('Base schema is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, glFn.getEnvSchema(\"baseSchema\"))).to.be.true;",
+							"});",
+							"",
+							"if (pm.response.code === 200) {",
+							"    ",
+							"    pm.test('Entity schema is valid', function() {",
+							"      pm.expect(tv4.validate(jsonData.data[0], glFn.getEnvSchema(\"userSchema\"))).to.be.true;",
+							"    });",
+							"    ",
+							"    pm.test('Message data is valid', function() {",
+							"      pm.expect(jsonData).to.have.property(\"message\", \"SUCCESS\");",
+							"    });",
+							"    ",
+							"    pm.test(\"Entity data is correct\", function () {",
+							"        pm.expect(jsonData.data[0]).to.have.property(\"firstName\", pm.environment.get(\"firstName\"));",
+							"        pm.expect(jsonData.data[0]).to.have.property(\"lastName\", pm.environment.get(\"lastName\"));",
+							"        pm.expect(jsonData.data[0]).to.have.property(\"middleName\", pm.environment.get(\"middleName\"));",
+							"        pm.expect(jsonData.data[0]).to.have.property(\"email\", pm.environment.get(\"emailValue\"));",
+							"        pm.expect(jsonData.data[0]).to.have.property(\"mobile\", pm.environment.get(\"mobileValue\"));",
+							"    });",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH /users/{{userID}}",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4c2894fe-7476-427d-935f-b607e8d3a330",
+						"exec": [
+							"let ts = Math.round((new Date()).getTime());",
+							"",
+							"pm.environment.set(\"firstName\", \"Гаврила\");",
+							"pm.environment.set(\"lastName\", \"Шереметьев́\");",
+							"pm.environment.set(\"middleName\", \"Петрович\");",
+							"pm.environment.set(\"emailValue\", \"sheremetyev\" + ts + \"@mail.ru\");",
+							"pm.environment.set(\"mobileValue\", \"7\" + ts);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "ec63acc1-c980-4eaf-9055-ec7b692ec6b7",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody)",
+							"",
+							"pm.test(\"Success response is correct\", function () {",
+							"    pm.expect(pm.response).to.have.property('code', 200);",
+							"    pm.expect(pm.response).to.have.property('status', 'OK');",
+							"    pm.expect(pm.response).to.have.header('Content-type', 'application/json; charset=UTF-8');",
+							"});",
+							"",
+							"pm.test('Base schema is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, glFn.getEnvSchema(\"baseSchema\"))).to.be.true;",
+							"});",
+							"",
+							"if (pm.response.code === 200) {",
+							"    ",
+							"    pm.test('Entity schema is valid', function() {",
+							"      pm.expect(tv4.validate(jsonData.data[0], glFn.getEnvSchema(\"userSchema\"))).to.be.true;",
+							"    });",
+							"    ",
+							"    pm.test('Message data is valid', function() {",
+							"      pm.expect(jsonData).to.have.property(\"message\", \"SUCCESS\");",
+							"    });",
+							"    ",
+							"    pm.test(\"Entity data is correct\", function () {",
+							"        pm.expect(jsonData.data[0]).to.have.property(\"firstName\", pm.environment.get(\"firstName\"));",
+							"        pm.expect(jsonData.data[0]).to.have.property(\"lastName\", pm.environment.get(\"lastName\"));",
+							"        pm.expect(jsonData.data[0]).to.have.property(\"middleName\", pm.environment.get(\"middleName\"));",
+							"        pm.expect(jsonData.data[0]).to.have.property(\"email\", pm.environment.get(\"emailValue\"));",
+							"        pm.expect(jsonData.data[0]).to.have.property(\"mobile\", pm.environment.get(\"mobileValue\"));",
+							"    });",
+							"    ",
+							"    pm.environment.set(\"userID\", jsonData.data[0].ID);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"{{firstName}}\",\n    \"lastName\": \"{{lastName}}\",\n    \"middleName\": \"{{middleName}}\",\n    \"email\": \"{{emailValue}}\",\n    \"mobile\": \"{{mobileValue}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/{{userID}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"{{userID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /users/{{userID}}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2e2a700b-19cc-4416-8c89-35a0cd5003bc",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody)",
+							"",
+							"pm.test(\"Success response is correct\", function () {",
+							"    pm.expect(pm.response).to.have.property('code', 200);",
+							"    pm.expect(pm.response).to.have.property('status', 'OK');",
+							"    pm.expect(pm.response).to.have.header('Content-type', 'application/json; charset=UTF-8');",
+							"});",
+							"",
+							"pm.test('Base schema is valid', function() {",
+							"  pm.expect(tv4.validate(jsonData, glFn.getEnvSchema(\"baseSchema\"))).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/users/{{userID}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"{{userID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "53378d93-b1e6-4efc-8606-cc24ee252a77",
+				"type": "text/javascript",
+				"exec": [
+					"var uuid = require('uuid');",
+					"pm.environment.set('randomID', uuid.v4());",
+					"",
+					"glFn = {",
+					"    getEnvSchema: function(name) {",
+					"        return JSON.parse(pm.variables.get(name));",
+					"}",
+					"}",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "4f639675-02fe-45f2-b0d7-97744e88a85e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "c2f3a2d1-4e72-4733-887c-8c003b0c414f",
+			"key": "baseUrl",
+			"value": "http://arch.homework/otusapp",
+			"type": "string"
+		},
+		{
+			"id": "2efb9541-3c5f-4db4-866d-683cb9746762",
+			"key": "baseSchema",
+			"value": "{\"type\":\"object\",\"properties\":{\"version\":{\"type\":\"string\"},\"errors\":{\"type\":[\"object\",\"array\",\"null\"]},\"data\":{\"type\":[\"array\",\"null\"]}},\"required\":[\"version\",\"errors\",\"data\"]}",
+			"type": "string"
+		},
+		{
+			"id": "594be38e-1f2e-46ab-ac7d-5394b83ed7df",
+			"key": "userSchema",
+			"value": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"ID\": {\n      \"type\": \"string\"\n    },\n    \"firstName\": {\n      \"type\": \"string\"\n    },\n    \"lastName\": {\n      \"type\": \"string\"\n    },\n    \"middleName\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    },\n    \"email\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    },\n    \"mobile\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    }\n  },\n  \"required\": [\n    \"ID\",\n    \"firstName\",\n    \"lastName\",\n    \"middleName\",\n    \"email\",\n    \"mobile\"\n  ]\n}",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

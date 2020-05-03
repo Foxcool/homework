@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "homework-chart.fullname" . }}-ab
+spec:
+  template:
+    metadata:
+      name: {{ include "homework-chart.fullname" . }}-ab
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: ab-test-job
+          image: httpd
+          command:
+            - sh
+            - "-c"
+            - |
+              while true; do
+                ab -n 50 -c 5 -H 'Host: {{.Values.ingress.hostname}}' http://{{.Values.ingress.address}}/otusapp/users;
+                sleep 3;
+              done
+              EOF
+  backoffLimit: 2

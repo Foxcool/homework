@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: {{ include "homework-chart.fullname" . }}-grafana-import-dashboards
   labels:
-    grafana_dashboard: "1"
+    grafana-dashboard: "1"
 data:
   grafana-net-2-dashboard.json: |
     {

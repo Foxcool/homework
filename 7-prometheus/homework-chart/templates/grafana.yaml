@@ -70,7 +70,7 @@ data:
         {
           "expr": "sum by (method, url) (rate(homework_requests_total[1m]))",
           "interval": "",
-          "legendFormat": "{{method}} {{url}}",
+          "legendFormat": "{{"{{"}}method{{"}}"}} {{"{{"}}url{{"}}"}}",
           "refId": "A"
         }
         ],
@@ -195,7 +195,7 @@ data:
         {
           "expr": "sum by (method, url) (rate(homework_requests_total{code=~\"5\\\\d\\\\d\"}[1m]))",
           "interval": "",
-          "legendFormat": "{{method}} {{url}}",
+          "legendFormat": "{{"{{"}}method{{"}}"}} {{"{{"}}url{{"}}"}}",
           "refId": "A"
         }
         ],
@@ -326,25 +326,25 @@ data:
         {
           "expr": "histogram_quantile(0.5, sum by (le, method, url) (rate(homework_request_duration_detailed_seconds_bucket[1m])))*1000",
           "interval": "",
-          "legendFormat": "0.5 {{method}} {{url}}",
+          "legendFormat": "0.5 {{"{{"}}method{{"}}"}} {{"{{"}}url{{"}}"}}",
           "refId": "A"
         },
         {
           "expr": "histogram_quantile(0.9, sum by (le, method, url) (rate(homework_request_duration_detailed_seconds_bucket[1m])))*1000",
           "interval": "",
-          "legendFormat": "0.9 {{method}} {{url}}",
+          "legendFormat": "0.9 {{"{{"}}method{{"}}"}} {{"{{"}}url{{"}}"}}",
           "refId": "B"
         },
         {
           "expr": "histogram_quantile(0.99, sum by (le, method, url) (rate(homework_request_duration_detailed_seconds_bucket[1m])))*1000",
           "interval": "",
-          "legendFormat": "0.99 {{method}} {{url}}",
+          "legendFormat": "0.99 {{"{{"}}method{{"}}"}} {{"{{"}}url{{"}}"}}",
           "refId": "C"
         },
         {
           "expr": "histogram_quantile(1, sum by (le, method, url) (rate(homework_request_duration_detailed_seconds_bucket[1m])))*1000",
           "interval": "",
-          "legendFormat": "max {{method}} {{url}}",
+          "legendFormat": "max {{"{{"}}method{{"}}"}} {{"{{"}}url{{"}}"}}",
           "refId": "D"
         }
         ],
@@ -442,7 +442,7 @@ data:
         {
           "expr": "sum by (exported_service) (rate(nginx_ingress_controller_requests{exported_service=~\".*-homework-chart\"}[1m]))",
           "interval": "",
-          "legendFormat": "{{exported_service}}",
+          "legendFormat": "{{"{{"}}exported_service{{"}}"}}",
           "refId": "A"
         }
         ],
@@ -567,7 +567,7 @@ data:
         {
           "expr": "sum by (exported_service) (rate(nginx_ingress_controller_requests{exported_service=~\".*-homework-chart\", status=~\"5\\\\d\\\\d\"}[1m]))",
           "interval": "",
-          "legendFormat": "{{exported_service}}",
+          "legendFormat": "{{"{{"}}exported_service{{"}}"}}",
           "refId": "A"
         }
         ],
@@ -700,25 +700,25 @@ data:
         {
           "expr": "histogram_quantile(0.5, sum by (le, exported_service) (rate(nginx_ingress_controller_request_duration_seconds_bucket{exported_service=~\".*-homework-chart\"}[1m])))*1000",
           "interval": "",
-          "legendFormat": "0.5 {{exported_service}}",
+          "legendFormat": "0.5 {{"{{"}}exported_service{{"}}"}}",
           "refId": "A"
         },
         {
           "expr": "histogram_quantile(0.9, sum by (le, exported_service) (rate(nginx_ingress_controller_request_duration_seconds_bucket{exported_service=~\".*-homework-chart\"}[1m])))*1000",
           "interval": "",
-          "legendFormat": "0.9 {{exported_service}}",
+          "legendFormat": "0.9 {{"{{"}}exported_service{{"}}"}}",
           "refId": "B"
         },
         {
           "expr": "histogram_quantile(0.99, sum by (le, exported_service) (rate(nginx_ingress_controller_request_duration_seconds_bucket{exported_service=~\".*-homework-chart\"}[1m])))*1000",
           "interval": "",
-          "legendFormat": "0.99 {{exported_service}}",
+          "legendFormat": "0.99 {{"{{"}}exported_service{{"}}"}}",
           "refId": "C"
         },
         {
           "expr": "histogram_quantile(1, sum by (le, exported_service) (rate(nginx_ingress_controller_request_duration_seconds_bucket{exported_service=~\".*-homework-chart\"}[1m])))*1000",
           "interval": "",
-          "legendFormat": "max {{exported_service}}",
+          "legendFormat": "max {{"{{"}}exported_service{{"}}"}}",
           "refId": "D"
         }
         ],

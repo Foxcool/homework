@@ -46,3 +46,6 @@ start port-forward to grafana (admin:prom-operator login)
 
     kubectl port-forward service/prom-grafana 9000:80
 
+install app
+
+    helm install mywork ./7-prometheus/homework-chart/

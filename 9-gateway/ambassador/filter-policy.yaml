@@ -1,0 +1,21 @@
+apiVersion: getambassador.io/v2
+kind: FilterPolicy
+metadata:
+  name: "profile-filter-policy"
+spec:
+  rules:
+  - host: "*"
+    path: "/users/*"
+    filters:
+    - name: "profile-jwt-filter"
+---
+apiVersion: getambassador.io/v2
+kind: FilterPolicy
+metadata:
+  name: "profile-filter-policy2"
+spec:
+  rules:
+    - host: "*"
+      path: "/users"
+      filters:
+        - name: "profile-jwt-filter"

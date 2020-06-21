@@ -1,0 +1,20 @@
+replicaCount: 2
+
+fullnameOverride: "profile"
+
+image: foxcool/homework
+
+service:
+  type: NodePort
+  port: 8008
+
+mongodb:
+  mongodbUsername: myuser
+  mongodbPassword: passwd
+  mongodbDatabase: homework
+  service:
+    port: "27017"
+logging:
+  output: STDOUT
+  format: TEXT
+  level: DEBUG

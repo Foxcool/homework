@@ -1,0 +1,18 @@
+apiVersion: skaffold/v2beta2
+kind: Config
+metadata:
+  name: profile
+build:
+  tagPolicy:
+    sha256: {}
+  artifacts:
+    - image: profile
+      context: ./src
+deploy:
+  helm:
+    releases:
+      - name: profile
+        chartPath: profile-chart
+        skipBuildDependencies: true
+        values:
+          image: profile

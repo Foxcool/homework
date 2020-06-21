@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "identity-chart.fullname" . }}-secret
+type: Opaque
+data:
+  PROFILE_PATH: {{ .Values.profile.path | b64enc | quote }}
+  PRIVATE_KEY: {{ .Values.jwt.privateKey | b64enc | quote }}
+  PUBLIC_KEY: {{ .Values.jwt.publicKey | b64enc | quote }}

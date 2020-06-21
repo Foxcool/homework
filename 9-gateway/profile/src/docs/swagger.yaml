@@ -1,0 +1,496 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: User API
+  description: User API
+  contact:
+    name: Aleksandr Babenko
+    url: http://darkfox.info
+    email: mail@darkfox.info
+
+tags:
+  - name: User
+  - name: Auth
+
+servers:
+  - url: http://arch.homework/otusapp
+
+paths:
+  /users:
+    get:
+      parameters:
+        - $ref: "#/components/parameters/phone"
+        - $ref: "#/components/parameters/email"
+      operationId: getUsers
+      tags:
+        - User
+      summary: Users collection
+      responses:
+        "200":
+          $ref: "#/components/responses/User_200"
+        "405":
+          $ref: "#/components/responses/Base_405"
+        "500":
+          $ref: "#/components/responses/Base_500"
+    post:
+      operationId: postUsers
+      requestBody:
+        $ref: "#/components/requestBodies/User"
+      tags:
+        - User
+      summary: Create user
+      responses:
+        "200":
+          $ref: "#/components/responses/User_200"
+        "400":
+          $ref: "#/components/responses/User_400"
+        "405":
+          $ref: "#/components/responses/Base_405"
+        "500":
+          $ref: "#/components/responses/Base_500"
+  "/users/{userID}":
+    parameters:
+      - $ref: "#/components/parameters/userID"
+    get:
+      operationId: getUser
+      tags:
+        - User
+      summary: User info
+      responses:
+        "200":
+          $ref: "#/components/responses/User_200"
+        "404":
+          $ref: "#/components/responses/Base_404"
+        "405":
+          $ref: "#/components/responses/Base_405"
+        "500":
+          $ref: "#/components/responses/Base_500"
+    patch:
+      operationId: patchUser
+      requestBody:
+        $ref: "#/components/requestBodies/User"
+      tags:
+        - User
+      summary: Update user
+      responses:
+        "200":
+          $ref: "#/components/responses/User_200"
+        "400":
+          $ref: "#/components/responses/User_400"
+        "404":
+          $ref: "#/components/responses/Base_404"
+        "405":
+          $ref: "#/components/responses/Base_405"
+        "500":
+          $ref: "#/components/responses/Base_500"
+    delete:
+      operationId: deleteUser
+      tags:
+        - User
+      summary: Delete user
+      responses:
+        "200":
+          $ref: "#/components/responses/User_200"
+        "400":
+          $ref: "#/components/responses/User_400"
+        "404":
+          $ref: "#/components/responses/Base_404"
+        "405":
+          $ref: "#/components/responses/Base_405"
+        "500":
+          $ref: "#/components/responses/Base_500"
+
+  /auth:
+    post:
+      operationId: auth
+      requestBody:
+        $ref: "#/components/requestBodies/Auth"
+      tags:
+        - Auth
+      summary: User's authentication
+      responses:
+        "200":
+          $ref: "#/components/responses/Auth_200"
+        "400":
+          $ref: "#/components/responses/Auth_400"
+        "401":
+          $ref: "#/components/responses/Base_401"
+        "405":
+          $ref: "#/components/responses/Base_405"
+        "500":
+          $ref: "#/components/responses/Base_500"
+
+
+components:
+  parameters:
+    userID:
+      name: userID
+      in: path
+      description: User identifier
+      required: true
+      schema:
+        type: string
+    phone:
+      name: phone
+      in: query
+      schema:
+        type: string
+      description: If the field is provided users will be filtered by phone
+    email:
+      name: email
+      in: query
+      schema:
+        type: string
+      description: If the field is provided users will be filtered by email
+
+
+  requestBodies:
+    User:
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/User_params"
+              - type: object
+                properties:
+                  password:
+                    type: string
+                    description: User's password
+                    example: xxxxxxxx
+                    minLength: 1
+                    nullable: true
+      required: true
+
+    Auth:
+      content:
+        application/json:
+          schema:
+            allOf:
+              - type: object
+                title: Auth_user_params
+                properties:
+                  login:
+                    type: string
+                    description: User's login
+                    example: user
+                    minLength: 1
+                  password:
+                    type: string
+                    description: User's password
+                    example: xxxxxxxx
+                    minLength: 1
+                required:
+                  - login
+                  - password
+
+
+  responses:
+    Base_401:
+      description: Access denied
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/Error_401"
+    Base_404:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/Error_404"
+    Base_405:
+      description: Invalid Method
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/Error_405"
+    Base_500:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/Error_500"
+    User_200:
+      description: User data collection
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/Success"
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/User_params_with_id"
+    User_400:
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/Error_400"
+              - type: object
+              - properties:
+                  errors:
+                    type: object
+                    properties:
+                      validation:
+                        type: object
+                        properties:
+                          firstName:
+                            type: string
+                            example: string
+                            enum:
+                              - string
+                              - min
+                          lastName:
+                            type: string
+                            example: string
+                            enum:
+                              - string
+                              - min
+                          middleName:
+                            type: string
+                            example: string
+                            enum:
+                              - string
+                              - min
+                          email:
+                            type: string
+                            example: unique
+                            enum:
+                              - email
+                              - required
+                              - min
+                              - unique
+                          mobile:
+                            type: string
+                            example: unique
+                            enum:
+                              - mobile
+                              - required
+                              - min
+                              - unique
+
+    Auth_200:
+      description: Authentication result
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/Success"
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      allOf:
+                        - type: object
+                          properties:
+                            userID:
+                              type: string
+                              example: 59581897-ad75-412f-94a5-5c35ace8af6d
+                              description: User ID
+                          required:
+                            - userID
+    Auth_400:
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/Error_400"
+              - type: object
+              - properties:
+                  errors:
+                    type: object
+                    properties:
+                      validation:
+                        type: object
+                        properties:
+                          login:
+                            type: string
+                            example: string
+                            enum:
+                              - string
+                              - required
+                              - min
+                          password:
+                            type: string
+                            example: string
+                            enum:
+                              - string
+                              - required
+                              - min
+
+
+  schemas:
+    Base:
+      description: Base response
+      type: object
+      properties:
+        version:
+          type: string
+          description: Service version
+          example: 2.0.0
+      required:
+        - version
+    Success:
+      description: Success
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - type: object
+          title: Success
+          properties:
+            message:
+              type: string
+              description: response message
+              example: SUCCESS
+            errors:
+              type: array
+              items: {}
+              example: null
+          required:
+            - message
+            - errors
+    Error:
+      description: Все плохо
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - type: object
+          title: Error
+          properties:
+            data:
+              example: null
+          required:
+            - data
+    Error_400:
+      allOf:
+        - $ref: "#/components/schemas/Error"
+        - type: object
+          title: Error_Error_400
+          properties:
+            message:
+              type: string
+              example: Validation error
+            errors:
+              type: array
+              items: {}
+          required:
+            - message
+            - errors
+    Error_401:
+      allOf:
+        - $ref: "#/components/schemas/Error"
+        - type: object
+          title: Error_401
+          properties:
+            message:
+              type: string
+              description: response message
+              example: Invalid token
+            errors:
+              type: array
+              items: {}
+          required:
+            - message
+            - errors
+    Error_404:
+      allOf:
+        - $ref: "#/components/schemas/Error"
+        - type: object
+          title: Error_Error_404
+          properties:
+            message:
+              type: string
+              description: response message
+              example: Entity not found
+            errors:
+              type: array
+              items: {}
+              example: null
+          required:
+            - message
+            - errors
+    Error_405:
+      allOf:
+        - $ref: "#/components/schemas/Error"
+        - type: object
+          title: Error_Error_405
+          properties:
+            message:
+              type: string
+              description: response message
+              example: Method ${METHOD} not allowed
+            errors:
+              type: array
+              items: {}
+              example: null
+    Error_500:
+      allOf:
+        - $ref: "#/components/schemas/Error"
+        - type: object
+          title: Error_Error_500
+          properties:
+            message:
+              type: string
+              description: response message
+              example: Internal server error
+            errors:
+              example: null
+          required:
+            - message
+            - errors
+    User_params:
+      title: User_params
+      properties:
+        firstName:
+          type: string
+          description: User's firstname
+          example: "John"
+          minLength: 1
+          nullable: true
+        lastName:
+          type: string
+          description: User's lastname
+          example: "Doe"
+          minLength: 1
+          nullable: true
+        middleName:
+          type: string
+          description: User's middlename
+          example: "Ivanovich"
+          minLength: 1
+          nullable: true
+        email:
+          type: string
+          description: User's email
+          example: "user@company.com"
+          minLength: 1
+          nullable: true
+        mobile:
+          type: string
+          description: User's phone
+          example: "+1234567890"
+          minLength: 1
+          nullable: true
+    User_params_with_id:
+      allOf:
+        - type: object
+          properties:
+            ID:
+              type: string
+              description: Идентификатор пользователя
+              example: 50c4df8a-ab71-4d40-855f-dd553f856a20
+        - $ref: "#/components/schemas/User_params"
+        - type: object
+          required:
+            - firstName
+            - lastName
+            - middleName
+            - email
+            - mobile

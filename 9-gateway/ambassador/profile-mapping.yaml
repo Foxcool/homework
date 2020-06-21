@@ -1,0 +1,18 @@
+apiVersion: getambassador.io/v2
+kind:  Mapping
+metadata:
+  name:  profile-mapping
+spec:
+  prefix: /users
+  service: profile:8008
+  rewrite: ""
+---
+apiVersion: getambassador.io/v2
+kind:  Mapping
+metadata:
+  name:  profile-register-mapping
+spec:
+  prefix: /register
+  service: profile:8008
+  rewrite: "/users"
+  method: POST

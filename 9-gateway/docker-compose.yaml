@@ -1,0 +1,75 @@
+version: '3.7'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: homework_mongodb
+    #    ports:
+    #      - 27017
+    networks:
+      - homework
+    volumes:
+      - 'mongo:/data/db'
+
+  profile:
+    build:
+      context: ./profile/src
+      dockerfile: Dockerfile
+    container_name: profile_api
+    environment:
+      - HOMEWORK_LOGGING_OUTPUT=STDOUT
+      - HOMEWORK_LOGGING_FORMAT=TEXT
+      - HOMEWORK_LOGGING_LEVEL=DEBUG
+      - HOMEWORK_HTTP_PORT=80
+      - HOMEWORK_DB_PORT=27017
+      - HOMEWORK_DB_HOST=homework_mongodb
+      - HOMEWORK_DB_DATABASE=homework
+    ports:
+      - 8000:80
+    networks:
+      - homework
+    tty: true
+    depends_on:
+      - mongodb
+
+  identity:
+    build:
+      context: ./identity/
+      dockerfile: Dockerfile
+    container_name: identity_api
+    environment:
+      - PROFILE_PATH=profile_api
+      - PRIVATE_KEY=
+        -----BEGIN RSA PRIVATE KEY-----
+        MIICXgIBAAKBgQCvrcv0G8cVPtFWSHv+FZUmvDk3UFqdbe8h5w+ke/8oBJilOGrc
+        u6lm8KNwnQelg3tYEXWUP36qeIhvhkqwNQyrXpR3t0iYHg1aq+YloRvFpaebo3Bu
+        Rz07r6XwY+LpQqePt+MtXVtzIRcX+Z5s/D50sMWN38oF7fxJs2ZqLAcP4wIDAQAB
+        AoGBAJoWLA9d1c4SnPW6+dYwA/RHnz+e4Pu4Esh/q76va2skLOathz039Ctv4UrC
+        0JQhsKvcFG8FCgpnUfPPq+7FeOfaMMmMnY/PSODgY0UKZIatUVDICF56ppsc53RH
+        QzpAQxM/3CmEm4eG5fz/T4vIdoN0JHDfKI8YMiF7CMLLO3qhAkEA1n3cobZSMU9q
+        Jlt7MGdt90inJxeAIR0b/EpxukDw2hBIy/eKJtLfXxZqhiYOSp5cjgLniS5Kn/S6
+        MWg+NquVawJBANGtHF++vFUc2m9qamP6ZHIdOpQyEO+HYFwVL3vhAiDmf9DxgE+6
+        JREiw/+GCZhT6XNX+3cxc1l/GIVk8WlvFWkCQQCwp4iHR3n6UsXCQaX7/7N57sR8
+        VcaZfzgFWerA06uKbc8G7iFCSHrf/b5OLhmnKzZfX9UCDrY3d3/CIXDb5gVxAkAw
+        bBkUZ3kY8tvjRSEiy62syOFBXjqZBpuTSHU516HlNTYpa8xlHSj4Rx4agbrvidlt
+        ANGbGjl4XqisDb7OyY+ZAkEAl83BiQfgSkKBzLL2LJ6e6mBOMNA5kHS7mDo4Am2T
+        GP3MLf9lNEhKMnZkPM/w7uAN+JyNSc67ue1jezhYSanBSA==
+        -----END RSA PRIVATE KEY-----
+      - PUBLIC_KEY=
+        -----BEGIN PUBLIC KEY-----
+        MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCvrcv0G8cVPtFWSHv+FZUmvDk3
+        UFqdbe8h5w+ke/8oBJilOGrcu6lm8KNwnQelg3tYEXWUP36qeIhvhkqwNQyrXpR3
+        t0iYHg1aq+YloRvFpaebo3BuRz07r6XwY+LpQqePt+MtXVtzIRcX+Z5s/D50sMWN
+        38oF7fxJs2ZqLAcP4wIDAQAB
+        -----END PUBLIC KEY-----
+    ports:
+      - 8001:8001
+    networks:
+      - homework
+    depends_on:
+      - profile
+
+networks:
+  homework:
+volumes:
+  mongo:

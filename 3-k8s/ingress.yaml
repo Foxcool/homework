@@ -9,7 +9,7 @@ spec:
     - host: arch.homework
       http:
         paths:
-          - path: /otusapp(/?)(.*)
+          - path: /otusapp/foxcool(/?)(.*)
             backend:
               serviceName: homework-service
               servicePort: 9000

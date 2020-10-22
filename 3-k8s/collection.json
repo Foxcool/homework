@@ -1,0 +1,172 @@
+{
+	"info": {
+		"_postman_id": "c85a598d-2590-47f7-9bbf-828bf78701b9",
+		"name": "k8s-basics",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET /",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69a5871c-003b-4707-ba92-628ebe8ad055",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody)",
+							"",
+							"tests[\"[DEBUG] Request: \" + JSON.stringify(request)] = true;",
+							"tests[\"[DEBUG] Response: \" + responseBody] = true;",
+							"",
+							"pm.test(\"Response is correct\", function () {",
+							"    pm.expect(pm.response).to.have.property('code', 200);",
+							"    pm.expect(pm.response).to.have.property('status', 'OK');",
+							"});",
+							"",
+							"",
+							"pm.test('Message data is valid', function() {",
+							"  pm.expect(jsonData).to.have.property(\"Hello world from\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/otusapp/foxcool/",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"otusapp",
+						"foxcool",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /health",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7c24f70b-d3f8-4dcb-b4fb-f8986c89da06",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody)",
+							"",
+							"tests[\"[DEBUG] Request: \" + JSON.stringify(request)] = true;",
+							"tests[\"[DEBUG] Response: \" + responseBody] = true;",
+							"",
+							"pm.test(\"Response is correct\", function () {",
+							"    pm.expect(pm.response).to.have.property('code', 200);",
+							"    pm.expect(pm.response).to.have.property('status', 'OK');",
+							"});",
+							"",
+							"",
+							"pm.test('Message data is valid', function() {",
+							"  pm.expect(jsonData).to.have.property(\"status\", \"OK\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/otusapp/foxcool/health",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"otusapp",
+						"foxcool",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /version",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dd775ec3-dd78-4788-8a65-8795c0c50937",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody)",
+							"",
+							"tests[\"[DEBUG] Request: \" + JSON.stringify(request)] = true;",
+							"tests[\"[DEBUG] Response: \" + responseBody] = true;",
+							"",
+							"pm.test(\"Response is correct\", function () {",
+							"    pm.expect(pm.response).to.have.property('code', 200);",
+							"    pm.expect(pm.response).to.have.property('status', 'OK');",
+							"});",
+							"",
+							"",
+							"pm.test('Message data is valid', function() {",
+							"  pm.expect(jsonData).to.have.property(\"version\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/otusapp/foxcool/version",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"otusapp",
+						"foxcool",
+						"version"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "f1ac4a71-b91b-406d-89a7-22c86187c17f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "7a7f6838-c719-4122-b662-605ce9f4c33c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "006fbc9c-a163-4f40-be27-5b42ff8c3220",
+			"key": "host",
+			"value": "http://arch.homework"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

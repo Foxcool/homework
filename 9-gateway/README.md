@@ -73,6 +73,6 @@ apply ambassador manifests
 
     kubectl apply -f ambassador/
     
-run newman (fish shell and may be you need to chande base url or port)
+run newman (fish shell and maybe you need to change base url or port)
 
     docker run --net=host -v (pwd):/etc/newman -t postman/newman run homework.postman_collection.json --env-var "baseUrl=http://arch.homework:31646"

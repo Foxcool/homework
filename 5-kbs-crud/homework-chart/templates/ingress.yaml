@@ -9,7 +9,7 @@ spec:
     - host: arch.homework
       http:
         paths:
-          - path: /otusapp(/?)(.*)
+          - path: /otusapp/foxcool(/?)(.*)
             backend:
               serviceName: {{ include "homework-chart.fullname" . }}
               servicePort: {{ .Values.service.port }}

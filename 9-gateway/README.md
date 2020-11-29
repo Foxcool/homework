@@ -37,42 +37,54 @@ POST /register - урл перенаправляет на POST /users серви
 POST /login - отправляется шлюзом на Identity, который далее делает запросы тоже на Profile для проверки пароля и получения данных юзера
 POST /users - отправляется на Profile с проверкой JWT
 
-# Действия
+# Запуск
 
 create and set namespace
 
     kubectl create namespace gateway
     kubectl config set-context --current --namespace=gateway
 
+install all charts
+
+    make run
+
+## Запуск вручную
+
 install prometheus and nginx
 
-    helm install prom stable/prometheus-operator -f homework/7-prometheus/prometheus.yaml --atomic
+    helm install prom stable/prometheus-operator -f prometheus.yaml --atomic
+
+    helm install nginx stable/nginx-ingress -f nginx-ingress.yaml
 
 install ambassador
 
-    helm install nginx stable/nginx-ingress -f homework/9-gateway/nginx-ingress.yaml
-    
     helm repo add datawire https://getambassador.io
     helm install aes datawire/ambassador -f ambassador_values.yaml
 
 install profile storage app
 
-    helm install profile homework/9-gateway/profile/profile-chart/
+    helm install profile profile/profile-chart/
+    
     # or
-    cd homework/9-gateway/profile
+
+    cd profile
     skaffold run
 
 install identity app
 
-    helm install profile homework/9-gateway/identity/identity-chart/
+    helm install profile identity/identity-chart/
+
     # or
-    cd homework/9-gateway/profile
+
+    cd identity
     skaffold run
 
 apply ambassador manifests
 
     kubectl apply -f ambassador/
     
-run newman (fish shell and maybe you need to change base url or port)
+## Запуск тестов
 
-    docker run --net=host -v (pwd):/etc/newman -t postman/newman run homework.postman_collection.json --env-var "baseUrl=http://arch.homework:31646"
+Запуск контейнера с ньюманом. Нужно заменить baseUrl на свой
+
+    docker run --net=host -v (pwd):/etc/newman -t postman/newman run homework.postman_collection.json --env-var "baseUrl=http://arch.homework:30327"

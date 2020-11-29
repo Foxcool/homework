@@ -2,7 +2,7 @@ replicaCount: 1
 
 fullnameOverride: "identity"
 
-image: "identity:0.1.0"
+image: "foxcool/identity:0.1.0"
 
 service:
   type: NodePort

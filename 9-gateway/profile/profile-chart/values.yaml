@@ -2,7 +2,7 @@ replicaCount: 2
 
 fullnameOverride: "profile"
 
-image: foxcool/homework
+image: foxcool/profile:0.1.0
 
 service:
   type: NodePort
